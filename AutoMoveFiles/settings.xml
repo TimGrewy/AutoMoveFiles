@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Properties>
+	<sourceFolder>C:\A</sourceFolder>
+	<patternsFile>rules.xml</patternsFile>
+	<logFile>log.txt</logFile>
+	<deleteIfExists>true</deleteIfExists>
+	<deleteIfNoMatch>false</deleteIfNoMatch>
+</Properties>

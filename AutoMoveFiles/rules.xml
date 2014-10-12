@@ -1,11 +1,6 @@
 <Rules>
 	<Rule>
-		<Pattern>.*?American.+?Dad.*?</Pattern>
-		<Path>C:\B\American Dad\</Path>
-		<PutInSeasons>true</PutInSeasons>
-	</Rule>
-	<Rule>
-		<Pattern>.*?The.+?Daily.+?Show.*?</Pattern>
-		<Path>C:\B\The Daily Colbert</Path>
+		<Pattern>.*?file.+?name.*?</Pattern>
+		<Path>C:\B</Path>
 	</Rule>
 </Rules>

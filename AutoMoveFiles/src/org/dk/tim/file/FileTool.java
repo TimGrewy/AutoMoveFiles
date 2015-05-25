@@ -63,4 +63,8 @@ public class FileTool {
 	public long getFileByteSize(File file) {
 		return file.length();
 	}
+
+	public boolean renameFile(File file, File newFile) {
+		return file.renameTo(newFile);
+	}
 }

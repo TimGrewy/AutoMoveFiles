@@ -7,9 +7,6 @@ import org.dk.tim.log.Logger;
 import org.dk.tim.xmlstructure.initialsetup.Properties;
 import org.dk.tim.xmlstructure.rules.Show;
 
-/**
- *	Test 
- */
 public class FileManager {
 	private static final String FOLDER_NAME_FOR_SEASON = "Season";
 	private Properties properties;
@@ -30,6 +27,8 @@ public class FileManager {
 
 			File destinationFolder;
 			if (rule.isPutInSeasons()) {
+				file = applyFileNameFix(file);
+
 				String season = RegexTool.extractSeasonFromFileName(file.getName());
 				String seasonFolderName = FOLDER_NAME_FOR_SEASON + " " + season;
 				destinationFolder = new File(path + seasonFolderName);
@@ -46,6 +45,19 @@ public class FileManager {
 				Logger.log(String.format("Deleted file %s", file.getName()));
 			}
 		}
+	}
+
+	/**
+	 * Looks for tv-shows with the wrong notation of season and epsode (0101) and renames the file to S01E01
+	 * @return 
+	 */
+	private File applyFileNameFix(File file) {
+		String fileName = file.getName();
+		String newFileName = RegexTool.generateCorrectFileName(fileName);
+		String newFilePath = file.getParent() + "\\" + newFileName;
+		File newFile = new File(newFilePath);
+		fileTool.renameFile(file, newFile);
+		return newFile;
 	}
 
 	/**

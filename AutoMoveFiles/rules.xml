@@ -1,6 +1,7 @@
 <Rules>
 	<Rule>
-		<Pattern>.*?file.+?name.*?</Pattern>
+		<Pattern>.*?Simpsons.*?</Pattern>
 		<Path>C:\B</Path>
+		<PutInSeasons>true</PutInSeasons>
 	</Rule>
 </Rules>

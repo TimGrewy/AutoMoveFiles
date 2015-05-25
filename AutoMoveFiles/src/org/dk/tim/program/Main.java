@@ -9,7 +9,7 @@ public class Main {
 	/**
 	 * Execute by command: java -jar AutoMoveFiles.jar
 	 * @param args (override where settings.xml is located)
-	 * Export: Eclipse->File->Export->java-jar - Choose Main.java to be default class
+	 * Export: Eclipse->File->Export->java-jar (Runnable jar)- Choose Main.java to be default class - make sure the main project folder is selected.
 	 */
 	public static void main(String[] args) {
 		try {

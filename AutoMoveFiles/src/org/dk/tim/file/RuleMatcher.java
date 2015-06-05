@@ -33,6 +33,9 @@ public class RuleMatcher {
 				List<File> filesInDirectory2 = fileTool.listFilesInDirectory(path);
 				moveFiles(filesInDirectory2);
 				fileTool.deleteFile(file);
+			} else if (file.getName().endsWith(".nfo")) {
+				Logger.log("Deleting .nfo file: " + file.getName());
+				fileTool.deleteFile(file);
 			} else {
 				processFile(file);
 			}

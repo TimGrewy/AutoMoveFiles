@@ -1,5 +1,7 @@
 package org.dk.tim.file;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,10 +40,17 @@ public class RegexTool {
 
 		if (matcher2.matches()) {
 			String oldNotation = matcher2.group("combined");
-			String newSeasonAndEpisodeNotation = "S0" + oldNotation.substring(0, 1) + "E" + oldNotation.substring(1, 3);
+			if (numberNotInExclutionList(oldNotation)) {
+				String newSeasonAndEpisodeNotation = "S0" + oldNotation.substring(0, 1) + "E" + oldNotation.substring(1, 3);
 
-			return fileName.replace(oldNotation, newSeasonAndEpisodeNotation);
+				return fileName.replace(oldNotation, newSeasonAndEpisodeNotation);
+			}
 		}
 		return null;
+	}
+
+	private static boolean numberNotInExclutionList(String oldNotation) {
+		List<String> exclutions = Arrays.asList("2014");
+		return exclutions.contains(oldNotation);
 	}
 }

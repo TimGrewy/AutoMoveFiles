@@ -9,7 +9,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dk.tim.log.Logger;
+
 public class FileTool {
+	private static Logger fileToolLog = new Logger("FileToolLog.txt");
 
 	public void deleteFile(File file) {
 		try {
@@ -20,8 +23,12 @@ public class FileTool {
 				for (File file2 : filesInDirectory2) {
 					deleteFile(file2);
 				}
+				fileToolLog.log("FileTool: Deleting directory: " + source);
+				Files.delete(source);
+			} else {
+				fileToolLog.log("FileTool: Deleting file: " + source);
+				Files.delete(source);
 			}
-			Files.delete(source);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -31,6 +38,7 @@ public class FileTool {
 		try {
 			Path source = Paths.get(file.getPath());
 			Path target = Paths.get(destinationPath);
+			fileToolLog.log("FileTool: Copying: " + source);
 			Files.copy(source, target);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -41,6 +49,7 @@ public class FileTool {
 		try {
 			Path source = Paths.get(file.getPath());
 			Path target = Paths.get(destinationFolder + "\\" + file.getName());
+			fileToolLog.log("FileTool: Moving: " + source);
 			Files.move(source, target);
 		} catch (FileAlreadyExistsException e) {
 			throw e;

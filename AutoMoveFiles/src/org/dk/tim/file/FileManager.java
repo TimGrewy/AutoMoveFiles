@@ -38,11 +38,11 @@ public class FileManager {
 			}
 
 			fileTool.moveFile(file, destinationFolder);
-			Logger.log(String.format("File %s moved to %s", file.getName(), destinationFolder));
+			Logger.logToSystemLog(String.format("File %s moved to %s", file.getName(), destinationFolder));
 		} catch (FileAlreadyExistsException e) {
 			if (properties.isDeleteIfExists()) {
 				fileTool.deleteFile(file);
-				Logger.log(String.format("Deleted file %s", file.getName()));
+				Logger.logToSystemLog(String.format("Deleted file %s", file.getName()));
 			}
 		}
 	}
@@ -81,7 +81,7 @@ public class FileManager {
 	private void createDestinationFolderOnDiskIfNotPresent(File destinationFolder) {
 		if (!destinationFolder.exists()) {
 			destinationFolder.mkdir();
-			Logger.log("Created new season folder: " + destinationFolder);
+			Logger.logToSystemLog("Created new season folder: " + destinationFolder);
 		}
 	}
 }

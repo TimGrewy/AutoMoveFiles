@@ -17,9 +17,11 @@ import org.dk.tim.file.FileTool;
  *
  */
 public class FileRenamer_RenameSrtFiles {
+	private static FileTool fileTool = new FileTool();
+
 	public static void main(String[] args) {
-		FileTool fileTool = new FileTool();
-		List<File> listFilesInDirectory = fileTool.listFilesInDirectory(Paths.get("c:\\A\\Modern family"));
+		System.out.println("Begin");
+		List<File> listFilesInDirectory = fileTool.listFilesInDirectory(Paths.get("c:\\A"));
 		List<File> srtFiles = new ArrayList<File>();
 		List<File> aviFiles = new ArrayList<File>();
 
@@ -41,14 +43,18 @@ public class FileRenamer_RenameSrtFiles {
 			File srtFile = srtFiles.get(i);
 			File aviFile = aviFiles.get(i);
 
-			String newName = srtFile.getName().replace(".srt", ".avi");
-			File file2 = new File(aviFile.getParentFile().getPath() + "\\" + newName);
-			System.out.print("Renaming: " + aviFile.getName() + "|" + newName);
-			boolean success = fileTool.renameFile(aviFile, file2);
-			System.out.println(": " + success);
+			String newName = aviFile.getName().replace(".mkv", ".srt");
+			logAndRename(srtFile, newName);
 
 		}
 
 		System.out.println("DONE");
+	}
+
+	private static void logAndRename(File srtFile, String newName) {
+		File file2 = new File(srtFile.getParentFile().getPath() + "\\" + newName);
+		System.out.println("Renaming: " + srtFile.getName() + "|" + newName);
+		boolean success = fileTool.renameFile(srtFile, file2);
+		System.out.println(": " + success);
 	}
 }

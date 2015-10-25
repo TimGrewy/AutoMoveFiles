@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.dk.tim.file.exception.VideoFileNotMatchedException;
 import org.dk.tim.log.Logger;
 import org.dk.tim.xmlstructure.initialsetup.Properties;
 import org.dk.tim.xmlstructure.rules.Rules;
@@ -25,16 +26,20 @@ public class RuleMatcher {
 		fileTool = new FileTool();
 	}
 
+	/**
+	 * Obs. Throws VideoFileNotMatchedException if a video file is not matched by a rule (Other files will be deleted)
+	 */
 	public void moveFiles(List<File> filesInDirectory) {
 		for (File file : filesInDirectory) {
 			if (file.isDirectory()) {
-				Path path = Paths.get(file.getAbsolutePath());
-				Logger.log("Processing directory: " + path);
-				List<File> filesInDirectory2 = fileTool.listFilesInDirectory(path);
-				moveFiles(filesInDirectory2);
-				fileTool.deleteFile(file);
+				try {
+					processDirectory(file);
+				} catch (VideoFileNotMatchedException e) {
+					//A video file was found in this folder which does not match any rule - we skip this folder and continue with the next
+					Logger.logToSystemLog(e.getMessage());
+				}
 			} else if (file.getName().endsWith(".nfo")) {
-				Logger.log("Deleting .nfo file: " + file.getName());
+				Logger.logToSystemLog("Deleting .nfo file: " + file.getName());
 				fileTool.deleteFile(file);
 			} else {
 				processFile(file);
@@ -42,10 +47,21 @@ public class RuleMatcher {
 		}
 	}
 
+	private void processDirectory(File file) {
+		Path path = Paths.get(file.getAbsolutePath());
+		Logger.logToSystemLog("Processing directory: " + path);
+		List<File> filesInDirectory2 = fileTool.listFilesInDirectory(path);
+		moveFiles(filesInDirectory2);
+		Logger.logToSystemLog("Deleting file after moving: " + file.getName());
+		fileTool.deleteFile(file);
+	}
+
 	private void processFile(File file) {
 		Show rule = findMatchingRule(file);
 		if (rule != null) {
 			fileManager.moveFile(file, rule);
+		} else if (rule == null && VideoFileNotMatchedException.isFileVideoFile(file)) {
+			throw new VideoFileNotMatchedException(file);
 		}
 	}
 
@@ -54,10 +70,10 @@ public class RuleMatcher {
 			String pattern = rule.getPattern();
 
 			if (matches(file.getName(), pattern)) {
-				Logger.log(String.format("File %s matched rule %s", file.getName(), rule.getPattern()));
+				Logger.logToSystemLog(String.format("File %s matched rule %s", file.getName(), rule.getPattern()));
 				return rule;
 			} else {
-				Logger.log(String.format("File %s did not matched rule %s", file.getName(), rule.getPattern()));
+				Logger.logToSystemLog(String.format("File %s did not matched rule %s", file.getName(), rule.getPattern()));
 			}
 		}
 

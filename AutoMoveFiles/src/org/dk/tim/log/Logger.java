@@ -14,25 +14,27 @@ import org.dk.tim.file.FileTool;
 
 public class Logger {
 	SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	public static Logger instance;
-	
+	public static Logger systemLog;
+
 	private String logFilePath;
 	private BufferedWriter out;
 	private long MAX_LOGFILE_SIZE = 10485760; //10485760 = 10 mb
 
-	public Logger(String logFile){
+	public Logger(String logFile) {
 		this.logFilePath = logFile;
 		initialize();
-		if(isLogFile()){
+		if (isValidLogFile()) {
 			cleanupIfFileIsTooBig(MAX_LOGFILE_SIZE);
 		}
 	}
-	private boolean isLogFile(){
+
+	private boolean isValidLogFile() {
 		return logFilePath != null && !logFilePath.equals("");
 	}
+
 	private void initialize() {
 		try {
-			if(isLogFile()){
+			if (isValidLogFile()) {
 				FileWriter fstream = new FileWriter(logFilePath, true);
 				out = new BufferedWriter(fstream);
 			}
@@ -40,45 +42,50 @@ public class Logger {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	public static void log(String x){
-		instance.logStatement(x);
+
+	public void log(String x) {
+		logStatement(x);
 	}
-	
+
+	public static void logToSystemLog(String x) {
+		systemLog.logStatement(x);
+	}
+
 	private void logStatement(String statement) {
 		try {
 			String timestamp = createTimeStamp();
-			
+
 			String decoratedStatement = String.format("[%s] : %s", timestamp, statement);
-			if(isLogFile()){
-				String lineSeperator = System.getProperty("line.separator");;
+			if (isValidLogFile()) {
+				String lineSeperator = System.getProperty("line.separator");
+				;
 				out.append(decoratedStatement + lineSeperator);
 			}
 			System.out.println(decoratedStatement);
-			
+
 		} catch (Exception e) {
 			System.err.println("Error: " + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			try {
-				if(isLogFile()){
+				if (isValidLogFile()) {
 					out.flush();
 				}
 			} catch (IOException e) {
 				System.err.println(e);
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
-	
-	public static void closeLogger(){
-		instance.internalCloseLogger();
+
+	public static void closeLogger() {
+		systemLog.internalCloseLogger();
 	}
-	
-	private void internalCloseLogger(){
+
+	private void internalCloseLogger() {
 		try {
-			if(isLogFile()){
+			if (isValidLogFile()) {
 				out.close();
 			}
 		} catch (IOException e) {
@@ -88,15 +95,15 @@ public class Logger {
 	}
 
 	private void cleanupIfFileIsTooBig(long MaxSize) {
-		try{
+		try {
 			File logFile = new File(logFilePath);
 			FileTool fileTool = new FileTool();
 			long fileByteSize = fileTool.getFileByteSize(logFile);
-			if(fileByteSize > MaxSize){
+			if (fileByteSize > MaxSize) {
 				clearLogFile(logFile, fileTool);
 			}
-		} catch (Exception e){
-			
+		} catch (Exception e) {
+
 		}
 	}
 
@@ -106,7 +113,7 @@ public class Logger {
 			BufferedWriter clearLogFileStream = new BufferedWriter(fstreamNoAppend);
 			out.flush();
 			clearLogFileStream.close();
-			
+
 			System.out.println("Log cleared");
 		} catch (IOException e) {
 			throw new RuntimeException(e);

@@ -49,15 +49,19 @@ public class FileManager {
 
 	/**
 	 * Looks for tv-shows with the wrong notation of season and epsode (0101) and renames the file to S01E01
-	 * @return 
+	 * @return the same file if no change is made 
 	 */
 	private File applyFileNameFix(File file) {
 		String fileName = file.getName();
 		String newFileName = RegexTool.generateCorrectFileName(fileName);
-		String newFilePath = file.getParent() + "\\" + newFileName;
-		File newFile = new File(newFilePath);
-		fileTool.renameFile(file, newFile);
-		return newFile;
+		if (newFileName != null) {
+			Logger.logToSystemLog("Applying file name fix - new name is: " + newFileName);
+			String newFilePath = file.getParent() + "\\" + newFileName;
+			File newFile = new File(newFilePath);
+			fileTool.renameFile(file, newFile);
+			return newFile;
+		}
+		return file;
 	}
 
 	/**

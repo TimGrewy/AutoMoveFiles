@@ -74,6 +74,7 @@ public class FileTool {
 	}
 
 	public boolean renameFile(File file, File newFile) {
+		fileToolLog.log("FileTool: Renaming: " + file + " TO " + newFile);
 		return file.renameTo(newFile);
 	}
 }

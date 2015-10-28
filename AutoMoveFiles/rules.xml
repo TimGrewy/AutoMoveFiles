@@ -1,6 +1,6 @@
 <Rules>
 	<Rule>
-		<Pattern>.*?Simpsons.*?</Pattern>
+		<Pattern>.*?Scorpion.*?</Pattern>
 		<Path>C:\B</Path>
 		<PutInSeasons>true</PutInSeasons>
 	</Rule>

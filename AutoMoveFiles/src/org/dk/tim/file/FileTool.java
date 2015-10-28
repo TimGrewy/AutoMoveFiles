@@ -58,6 +58,11 @@ public class FileTool {
 		}
 	}
 
+	public boolean renameFile(File file, File newFile) {
+		fileToolLog.log("FileTool: Renaming: " + file + " TO " + newFile);
+		return file.renameTo(newFile);
+	}
+
 	public List<File> listFilesInDirectory(Path sourceDirectory) {
 		List<File> result = new ArrayList<File>();
 		File folder = new File(sourceDirectory.toString());
@@ -73,8 +78,4 @@ public class FileTool {
 		return file.length();
 	}
 
-	public boolean renameFile(File file, File newFile) {
-		fileToolLog.log("FileTool: Renaming: " + file + " TO " + newFile);
-		return file.renameTo(newFile);
-	}
 }

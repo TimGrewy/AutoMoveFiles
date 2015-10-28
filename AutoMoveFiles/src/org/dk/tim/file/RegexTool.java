@@ -51,6 +51,6 @@ public class RegexTool {
 
 	private static boolean numberNotInExclutionList(String oldNotation) {
 		List<String> exclutions = Arrays.asList("2014");
-		return exclutions.contains(oldNotation);
+		return !exclutions.contains(oldNotation);
 	}
 }

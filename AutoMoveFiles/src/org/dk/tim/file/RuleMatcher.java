@@ -57,12 +57,24 @@ public class RuleMatcher {
 	}
 
 	private void processFile(File file) {
+		if (isSampleFile(file)) {
+			fileTool.deleteFile(file);
+		}
+
 		Show rule = findMatchingRule(file);
 		if (rule != null) {
 			fileManager.moveFile(file, rule);
 		} else if (rule == null && VideoFileNotMatchedException.isFileVideoFile(file)) {
 			throw new VideoFileNotMatchedException(file);
 		}
+	}
+
+	/**
+	 *	determines if a file is a sample file based on  if it contains "sample."
+	 *  (We dont need these) 
+	 */
+	private boolean isSampleFile(File file) {
+		return file.getName().contains("sample.");
 	}
 
 	private Show findMatchingRule(File file) {

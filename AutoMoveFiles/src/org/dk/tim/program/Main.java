@@ -25,6 +25,7 @@ public class Main {
 			System.out.println("Completed. Duration: " + (end - start) + " ms");
 		} catch (Exception e) {
 			System.out.println("Failed to run program. " + e.getMessage());
+			Logger.logToSystemLog("Failed to run program. " + e.getMessage());
 			throw new RuntimeException(e);
 		} finally {
 			Logger.closeLogger();

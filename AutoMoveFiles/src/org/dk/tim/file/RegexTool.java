@@ -50,7 +50,7 @@ public class RegexTool {
 	}
 
 	private static boolean numberNotInExclutionList(String oldNotation) {
-		List<String> exclutions = Arrays.asList("2014");
+		List<String> exclutions = Arrays.asList("2014", "264");//2014 is year - 264 i encoding
 		return !exclutions.contains(oldNotation);
 	}
 }

@@ -5,4 +5,7 @@
 	<logFile>log.txt</logFile>
 	<deleteIfExists>true</deleteIfExists>
 	<deleteIfNoMatch>false</deleteIfNoMatch>
+	<emailJarLocation>C:\A\EmailSender\emailsender.jar</emailJarLocation>
+	<emailConfigurationLocation>C:\A\EmailSender\configuration.txt</emailConfigurationLocation>
+	<errorEmailSendTo>some@email.xxx</errorEmailSendTo>
 </Properties>

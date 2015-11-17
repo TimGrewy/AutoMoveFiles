@@ -25,9 +25,7 @@ public class AutoFileMover {
 		readFile = new ReadFile();
 	}
 
-	public void executeProgram(Path xmlFile) {
-		Properties properties = initializeProperties(xmlFile);
-		setupLogging(properties.getLogFile());
+	public void executeProgram(Properties properties) {
 		Logger.logToSystemLog("Stating program");
 
 		Rules rules = getRules(properties);
@@ -35,11 +33,6 @@ public class AutoFileMover {
 
 		Path sourceDirectory = Paths.get(properties.getSourceFolder());
 		moveFiles(sourceDirectory);
-	}
-
-	private void setupLogging(String logFile) {
-		System.out.println("Setting up logger: " + logFile);
-		Logger.systemLog = new Logger(logFile);
 	}
 
 	private void moveFiles(Path sourceDirectory) {
@@ -52,11 +45,5 @@ public class AutoFileMover {
 		String xml = readFile.getFileContent(PatternsFilePath);
 		Rules rules = xmlParser.parseRules(xml);
 		return rules;
-	}
-
-	private Properties initializeProperties(Path xmlFile) {
-		String xml = readFile.getFileContent(xmlFile);
-		Properties properties = xmlParser.parseProperties(xml);
-		return properties;
 	}
 }

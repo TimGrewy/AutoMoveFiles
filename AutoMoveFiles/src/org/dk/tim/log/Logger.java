@@ -80,7 +80,11 @@ public class Logger {
 	}
 
 	public static void closeLogger() {
-		systemLog.internalCloseLogger();
+		try {
+			systemLog.internalCloseLogger();
+		} catch (Exception e) {
+			System.out.println("Failed to close logger. " + e.getMessage());
+		}
 	}
 
 	private void internalCloseLogger() {

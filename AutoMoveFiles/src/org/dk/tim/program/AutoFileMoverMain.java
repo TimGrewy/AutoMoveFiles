@@ -11,11 +11,11 @@ import org.dk.tim.log.Logger;
 import org.dk.tim.parsexml.XMLParser;
 import org.dk.tim.xmlstructure.initialsetup.Properties;
 
-public class Main {
+public class AutoFileMoverMain {
 	/**
 	 * Execute by command: java -jar AutoMoveFiles.jar
 	 * @param args (override where settings.xml is located)
-	 * Export: Eclipse->File->Export->java-jar (Runnable jar)- Choose Main.java to be default class - make sure the main project folder is selected.
+	 * Export: Eclipse->File->Export->java-jar (Runnable jar)- Choose Main.java to be default class - make sure the main project folder is selected. (Ignore warnings when after export)
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException {
 		Properties properties = null;
@@ -32,12 +32,11 @@ public class Main {
 			autoMoveFiles.executeProgram(properties);
 
 			long end = System.currentTimeMillis();
-			System.out.println("Completed. Duration: " + (end - start) + " ms");
+			Logger.logToSystemLogAndSystemOut("Completed. Duration: " + (end - start) + " ms");
 		} catch (Exception e) {
 			String errorMsg = "Failed to run program. " + e.getMessage();
-			System.out.println(errorMsg);
-			Logger.logToSystemLog(errorMsg);
-			Logger.logToSystemLog(Logger.parseStackTraceToString(e));
+			Logger.logToSystemLogAndSystemOut(errorMsg);
+			Logger.logToSystemLogAndSystemOut(Logger.parseStackTraceToString(e));
 			new EmailNotifier(properties).sendNotificationEmail(properties.getErrorEmailSendTo(), "Failed to run @ " + new Date(), errorMsg);
 			throw new RuntimeException(e);
 		} finally {

@@ -26,7 +26,7 @@ public class AutoFileMover {
 	}
 
 	public void executeProgram(Properties properties) {
-		Logger.logToSystemLog("Stating program");
+		Logger.logToSystemLogAndSystemOut("Stating program");
 
 		Rules rules = getRules(properties);
 		ruleMatcher = new RuleMatcher(properties, rules);

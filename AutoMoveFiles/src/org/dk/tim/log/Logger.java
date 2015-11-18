@@ -49,7 +49,7 @@ public class Logger {
 		logStatement(x);
 	}
 
-	public static void logToSystemLog(String x) {
+	public static void logToSystemLogAndSystemOut(String x) {
 		systemLog.logStatement(x);
 	}
 

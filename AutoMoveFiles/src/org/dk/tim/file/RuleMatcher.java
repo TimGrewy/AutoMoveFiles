@@ -36,10 +36,10 @@ public class RuleMatcher {
 					processDirectory(file);
 				} catch (VideoFileNotMatchedException e) {
 					//A video file was found in this folder which does not match any rule - we skip this folder and continue with the next
-					Logger.logToSystemLog(e.getMessage());
+					Logger.logToSystemLogAndSystemOut(e.getMessage());
 				}
 			} else if (file.getName().endsWith(".nfo")) {
-				Logger.logToSystemLog("Deleting .nfo file: " + file.getName());
+				Logger.logToSystemLogAndSystemOut("Deleting .nfo file: " + file.getName());
 				fileTool.deleteFile(file);
 			} else {
 				processFile(file);
@@ -49,10 +49,10 @@ public class RuleMatcher {
 
 	private void processDirectory(File file) {
 		Path path = Paths.get(file.getAbsolutePath());
-		Logger.logToSystemLog("Processing directory: " + path);
+		Logger.logToSystemLogAndSystemOut("Processing directory: " + path);
 		List<File> filesInDirectory2 = fileTool.listFilesInDirectory(path);
 		moveFiles(filesInDirectory2);
-		Logger.logToSystemLog("Deleting file after moving: " + file.getName());
+		Logger.logToSystemLogAndSystemOut("Deleting file after moving: " + file.getName());
 		fileTool.deleteFile(file);
 	}
 
@@ -82,10 +82,10 @@ public class RuleMatcher {
 			String pattern = rule.getPattern();
 
 			if (matches(file.getName(), pattern)) {
-				Logger.logToSystemLog(String.format("File %s matched rule %s", file.getName(), rule.getPattern()));
+				Logger.logToSystemLogAndSystemOut(String.format("File %s matched rule %s", file.getName(), rule.getPattern()));
 				return rule;
 			} else {
-				Logger.logToSystemLog(String.format("File %s did not matched rule %s", file.getName(), rule.getPattern()));
+				Logger.logToSystemLogAndSystemOut(String.format("File %s did not matched rule %s", file.getName(), rule.getPattern()));
 			}
 		}
 

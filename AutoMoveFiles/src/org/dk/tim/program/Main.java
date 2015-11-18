@@ -37,8 +37,8 @@ public class Main {
 			String errorMsg = "Failed to run program. " + e.getMessage();
 			System.out.println(errorMsg);
 			Logger.logToSystemLog(errorMsg);
+			Logger.logToSystemLog(Logger.parseStackTraceToString(e));
 			new EmailNotifier(properties).sendNotificationEmail(properties.getErrorEmailSendTo(), "Failed to run @ " + new Date(), errorMsg);
-			e.printStackTrace();
 			throw new RuntimeException(e);
 		} finally {
 			Logger.closeLogger();
@@ -68,5 +68,4 @@ public class Main {
 		System.out.println("Setting up logger: " + logFile);
 		Logger.systemLog = new Logger(logFile);
 	}
-
 }

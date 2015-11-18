@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -122,6 +124,17 @@ public class Logger {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	/*
+	 * Flushes the stack trace to a writer and returns the writer as a String
+	 */
+	public static String parseStackTraceToString(Exception e) {
+		StringWriter writer = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(writer);
+		e.printStackTrace(printWriter);
+		printWriter.flush();
+		return writer.toString();
 	}
 
 	private String createTimeStamp() {

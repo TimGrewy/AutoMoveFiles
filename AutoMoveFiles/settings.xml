@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Properties>
-	<sourceFolder>C:\A</sourceFolder>
+	<sourceFolder>C:\B</sourceFolder>
 	<patternsFile>rules.xml</patternsFile>
 	<logFile>log.txt</logFile>
 	<deleteIfExists>true</deleteIfExists>

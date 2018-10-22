@@ -1,7 +1,7 @@
 <Rules>
 	<Rule>
-		<Pattern>.*?Scorpion.*?</Pattern>
-		<Path>C:\B</Path>
+		<Pattern>.*?Test.*?</Pattern>
+		<Path>C:\C</Path>
 		<PutInSeasons>true</PutInSeasons>
 	</Rule>
 </Rules>

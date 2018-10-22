@@ -38,8 +38,8 @@ public class RuleMatcher {
 					//A video file was found in this folder which does not match any rule - we skip this folder and continue with the next
 					Logger.logToSystemLogAndSystemOut(e.getMessage());
 				}
-			} else if (file.getName().endsWith(".nfo")) {
-				Logger.logToSystemLogAndSystemOut("Deleting .nfo file: " + file.getName());
+			} else if (file.getName().endsWith(".nfo") || file.getName().endsWith(".txt")) {
+				Logger.logToSystemLogAndSystemOut("Deleting "+file.getName().substring(file.getName().lastIndexOf("."))+" file: " + file.getName());
 				fileTool.deleteFile(file);
 			} else {
 				processFile(file);

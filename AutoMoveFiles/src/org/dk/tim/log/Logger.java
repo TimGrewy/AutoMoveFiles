@@ -31,7 +31,11 @@ public class Logger {
 	}
 
 	private boolean isValidLogFile() {
-		return logFilePath != null && !logFilePath.equals("");
+		boolean valid = logFilePath != null && !logFilePath.equals("");
+		if (!valid) {
+			System.out.println("No valid logger! logFilePath: "  + logFilePath);
+		}
+		return valid;
 	}
 
 	private void initialize() {
@@ -60,7 +64,7 @@ public class Logger {
 			String decoratedStatement = String.format("[%s] : %s", timestamp, statement);
 			if (isValidLogFile()) {
 				String lineSeperator = System.getProperty("line.separator");
-				;
+				
 				out.append(decoratedStatement + lineSeperator);
 			}
 			System.out.println(decoratedStatement);
@@ -142,5 +146,10 @@ public class Logger {
 		Calendar cal = new GregorianCalendar(locale);
 		Date date = cal.getTime();
 		return df.format(date);
+	}
+
+	public static void logToDebugLogAnd(String string) {
+		// TODO Auto-generated method stub
+		
 	}
 }

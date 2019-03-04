@@ -12,9 +12,9 @@ public class FileManager {
 	private Properties properties;
 	private FileTool fileTool;
 
-	public FileManager(Properties properties) {
+	public FileManager(Properties properties, FileTool fileTool) {
 		this.properties = properties;
-		fileTool = new FileTool();
+		this.fileTool = fileTool;
 	}
 
 	public void moveFile(File file, Show rule) {

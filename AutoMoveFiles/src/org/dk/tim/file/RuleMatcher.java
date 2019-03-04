@@ -18,12 +18,12 @@ public class RuleMatcher {
 	private FileManager fileManager;
 	private FileTool fileTool;
 
-	public RuleMatcher(Properties properties, Rules rules) {
+	public RuleMatcher(Properties properties, Rules rules, FileTool fileTool) {
 		validateNotEmptyRules(rules);
 
 		this.rules = rules;
-		fileManager = new FileManager(properties);
-		fileTool = new FileTool();
+		fileManager = new FileManager(properties, fileTool);
+		this.fileTool = fileTool;
 	}
 
 	/**

@@ -20,16 +20,16 @@ public class AutoFileMover {
 	private RuleMatcher ruleMatcher;
 
 	public AutoFileMover() {
-		fileTool = new FileTool();
 		xmlParser = new XMLParser();
 		readFile = new ReadFile();
 	}
 
-	public void executeProgram(Properties properties) {
+	public void executeProgram(Properties properties, FileTool fileTool) {
+		this.fileTool = fileTool;
 		Logger.logToSystemLogAndSystemOut("Stating program");
 
 		Rules rules = getRules(properties);
-		ruleMatcher = new RuleMatcher(properties, rules);
+		ruleMatcher = new RuleMatcher(properties, rules, fileTool);
 
 		Path sourceDirectory = Paths.get(properties.getSourceFolder());
 		moveFiles(sourceDirectory);

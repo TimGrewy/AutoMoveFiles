@@ -3,6 +3,7 @@
 	<sourceFolder>C:\B</sourceFolder>
 	<patternsFile>rules.xml</patternsFile>
 	<logFile>log.txt</logFile>
+	<fileToolLog>fileToolLog.txt</fileToolLog>
 	<deleteIfExists>true</deleteIfExists>
 	<deleteIfNoMatch>false</deleteIfNoMatch>
 	<emailJarLocation>C:\A\EmailSender\emailsender.jar</emailJarLocation>

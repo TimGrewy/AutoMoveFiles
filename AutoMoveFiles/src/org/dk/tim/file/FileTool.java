@@ -12,8 +12,12 @@ import java.util.List;
 import org.dk.tim.log.Logger;
 
 public class FileTool {
-	private static Logger fileToolLog = new Logger("FileToolLog.txt");
+	private Logger fileToolLog;
 
+	public FileTool(String fileToolLogPath) {
+		fileToolLog = new Logger(fileToolLogPath, this);
+	}
+	
 	public void deleteFile(File file) {
 		try {
 			Path source = Paths.get(file.getPath());

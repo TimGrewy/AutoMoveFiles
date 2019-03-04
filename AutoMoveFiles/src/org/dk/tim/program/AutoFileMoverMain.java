@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 
+import org.dk.tim.file.FileTool;
 import org.dk.tim.file.ReadFile;
 import org.dk.tim.log.EmailNotifier;
 import org.dk.tim.log.Logger;
@@ -18,6 +19,7 @@ public class AutoFileMoverMain {
 	 * Export: Eclipse->File->Export->java-jar (Runnable jar)- Choose Main.java to be default class - make sure the main project folder is selected. (Ignore warnings when after export)
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException {
+		System.out.println("Beginnnningngngn");
 		Properties properties = null;
 		try {
 			long start = System.currentTimeMillis();
@@ -27,9 +29,10 @@ public class AutoFileMoverMain {
 
 			AutoFileMover autoMoveFiles = new AutoFileMover();
 			properties = initializeProperties(settingsFilePath);
-			setupLogging(properties.getLogFile());
+			FileTool fileTool = new FileTool(properties.getFileToolLog());
+			setupLogging(properties.getLogFile(), fileTool);
 
-			autoMoveFiles.executeProgram(properties);
+			autoMoveFiles.executeProgram(properties, fileTool);
 
 			long end = System.currentTimeMillis();
 			Logger.logToSystemLogAndSystemOut("Completed. Duration: " + (end - start) + " ms");
@@ -63,8 +66,8 @@ public class AutoFileMoverMain {
 		return properties;
 	}
 
-	private static void setupLogging(String logFile) {
+	private static void setupLogging(String logFile, FileTool fileTool) {
 		System.out.println("Setting up logger: " + logFile);
-		Logger.systemLog = new Logger(logFile);
+		Logger.systemLog = new Logger(logFile, fileTool);
 	}
 }

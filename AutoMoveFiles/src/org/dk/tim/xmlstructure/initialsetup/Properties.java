@@ -12,6 +12,8 @@ public class Properties {
 	@XmlElement
 	private String logFile;
 	@XmlElement
+	private String fileToolLog;
+	@XmlElement
 	private String deleteIfExists;
 	@XmlElement
 	private String deleteIfNoMatch;
@@ -32,6 +34,9 @@ public class Properties {
 	}
 
 	public String getLogFile() {
+		return logFile;
+	}
+	public String getFileToolLog() {
 		return logFile;
 	}
 

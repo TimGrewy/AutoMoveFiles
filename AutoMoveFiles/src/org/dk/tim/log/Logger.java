@@ -22,11 +22,11 @@ public class Logger {
 	private BufferedWriter out;
 	private long MAX_LOGFILE_SIZE = 10485760; //10485760 = 10 mb
 
-	public Logger(String logFile) {
-		this.logFilePath = logFile;
+	public Logger(String logFilePath, FileTool fileTool) {
+		this.logFilePath = logFilePath;
 		initialize();
 		if (isValidLogFile()) {
-			cleanupIfFileIsTooBig(MAX_LOGFILE_SIZE);
+			cleanupIfFileIsTooBig(MAX_LOGFILE_SIZE, fileTool);
 		}
 	}
 
@@ -39,6 +39,7 @@ public class Logger {
 	}
 
 	private void initialize() {
+		System.out.println("Initialize with logFile: " + logFilePath);
 		try {
 			if (isValidLogFile()) {
 				FileWriter fstream = new FileWriter(logFilePath, true);
@@ -54,7 +55,12 @@ public class Logger {
 	}
 
 	public static void logToSystemLogAndSystemOut(String x) {
-		systemLog.logStatement(x);
+		if (systemLog != null) {
+			systemLog.logStatement(x);
+		} else {
+			System.out.println("INGEN SYSTEMLOG INITIALISERET");
+			System.out.println(x);
+		}
 	}
 
 	private void logStatement(String statement) {
@@ -104,10 +110,9 @@ public class Logger {
 		}
 	}
 
-	private void cleanupIfFileIsTooBig(long MaxSize) {
+	private void cleanupIfFileIsTooBig(long MaxSize, FileTool fileTool) {
 		try {
 			File logFile = new File(logFilePath);
-			FileTool fileTool = new FileTool();
 			long fileByteSize = fileTool.getFileByteSize(logFile);
 			if (fileByteSize > MaxSize) {
 				clearLogFile(logFile, fileTool);

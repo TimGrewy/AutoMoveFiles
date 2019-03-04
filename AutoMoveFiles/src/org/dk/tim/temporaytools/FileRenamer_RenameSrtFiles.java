@@ -24,7 +24,7 @@ public class FileRenamer_RenameSrtFiles {
 		SRT_NAMES, VID_NAMES
 	}
 
-	private static FileTool fileTool = new FileTool();
+	private static FileTool fileTool = new FileTool("c:\\a\\renamerLog.txt");
 
 	public static void main(String[] args) {
 		System.out.println("Begin");
